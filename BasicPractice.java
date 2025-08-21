@@ -1,9 +1,9 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class BasicPractice {
-  public BasicPractice(){
-  }
+  
 
   public static void main(String[] args){
     //繰り返し処理の練習と計算
@@ -15,18 +15,37 @@ public class BasicPractice {
     int operatorNum      = 0;
     double answer        = 0;
 
-    String mathMessage = "";
+    String mathMessage                         = "";
+    String mismatchMessage = "数字のみ受け付けています";
 
     while(count <= 2){ //入力受付
       if(count == 0){
-        System.out.println("一つ目の数字をどうぞ");
-        firstNum = scanner.nextDouble(); //メッセージの次の行を読み取る
+        try{
+          System.out.println("一つ目の数字をどうぞ");
+          firstNum = scanner.nextDouble(); //メッセージの次の行を読み取る
+        }catch (InputMismatchException ime){
+          System.out.println(mismatchMessage);
+          scanner.next();
+          count--;
+        }
       }else if(count == 1){
-        System.out.println("二つ目の数字をどうぞ");
-        secondNum = scanner.nextDouble(); //同じ
+        try{
+          System.out.println("二つ目の数字をどうぞ");
+          secondNum = scanner.nextDouble(); //同じ
+        }catch(InputMismatchException ime){
+          System.out.println(mismatchMessage);
+          scanner.next();
+          count--;
+        }
       }else{
         System.out.println("なんの演算を行いますか。(+=1 -=2 x=3 ÷=4)");
-        operatorNum = scanner.nextInt();
+        try{
+          operatorNum = scanner.nextInt();
+        }catch(InputMismatchException ime){
+          System.out.println(mismatchMessage);
+          scanner.next();
+          count--;
+        }
         if(operatorNum <= 0 || operatorNum > 4) count--;//指定範囲外の数字が出る場合はやり直す
       }
       count++;
